@@ -1,0 +1,7 @@
+<form catchsubmit="formSubmit">
+	<view class="cu-form-group margin-top">
+		<view class="title">商铺名字</view>
+		<input name="name" placeholder="一经确定不可修改"></input>
+	</view>
+	<button class="cu-btn block bg-green margin-tb-sm lg" formType="submit">确定</button>
+</form>

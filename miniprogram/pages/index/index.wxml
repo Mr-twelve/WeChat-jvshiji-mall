@@ -1,0 +1,27 @@
+<view class="page">
+
+	<view class="flex justify-center" style="margin-top:20%">
+		<image style="width:70%" mode="widthFix" src="cloud://text-wcj22.7465-text-wcj22-1302567170/聚食集/聚食集 logo.png"></image>
+	</view>
+	<form catchsubmit="formSubmit" catchreset="formReset">
+		<view class="case">
+			<view class="cu-item shadow bg-grey" style="margin: 20% 15% 20rpx 15%">
+				<view class="flex cu-form-group justify-center">
+					<input name="zhanghao" style='text-align:center' placeholder="请输入账号"></input>
+				</view>
+			</view>
+			<view class="cu-item shadow bg-gray" style="margin: 0 15% 20rpx 15%">
+				<view class="flex cu-form-group justify-center">
+					<input name="mima" style='text-align:center' placeholder="请输入密码"></input>
+				</view>
+			</view>
+			<button formType="submit" bindtap="look" class="bg-gray cu-item shadow" style="margin: 0 15% 0 15%">
+				登陆
+			</button>
+		</view>
+	</form>
+	<!-- <view wx:if="{{look}}" class="padding flex flex-direction">
+		<button bindtap="gouser" class="cu-btn bg-green margin-tb-sm lg">用户界面</button>
+		<button bindtap="gohouduan" class="cu-btn bg-green margin-tb-sm lg">后端管理界面</button>
+	</view> -->
+</view>

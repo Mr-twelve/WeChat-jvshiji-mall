@@ -1,0 +1,78 @@
+<form catchsubmit="lookday" catchreset="formReset">
+	<view class="cu-form-group margin-top">
+		<view class="title">输入关键字</view>
+		<input name="inputname" placeholder="姓名、电话、订单号"></input>
+	</view>
+	<button formType="submit" class="cu-btn block bg-green margin-tb-sm lg">查询</button>
+
+</form>
+
+
+
+<view class="cu-card case">
+	<block>
+		<block wx:if="{{nohave}}">
+			<view class="solids-bottom padding-xs flex align-center">
+				<view class="flex-sub text-center">
+					<view class="solid-bottom text-xl padding">
+						<text class="text-black text-bold">查询无结果</text>
+					</view>
+				</view>
+			</view>
+		</block>
+		<block wx:for="{{dindan}}">
+			<view class="cu-item shadow bg-white light solids" style="margin: 10rpx 20rpx;color:black">
+				<view class="cu-list menu-avatar">
+					<!-- 上 -->
+					<view class="flex radius text-xl text-bold solids-bottom justify-between"
+						style="padding: 20rpx 30rpx 20rpx 20rpx;">
+						<view>
+							<view style="display: flex;flex-direction:column;justify-content: center; font-size:25rpx">
+								下单时间:{{item.upday}}/{{item.uptime}}/{{item.yuyue}}</view>
+							<view wx:if="{{item.goday}}"
+								style="display: flex;flex-direction:column;justify-content: center; font-size:25rpx">
+								出单时间:{{item.goday}}/{{item.gotime}}</view>
+							<view wx:else style="display: flex;flex-direction:column;justify-content: center; font-size:25rpx">
+								出单时间:未出单</view>
+						</view>
+						<view style="display: flex;flex-direction:column;justify-content: center;" class="text-xxl text-red">
+							￥{{item.totalprice}}</view>
+					</view>
+					<!-- 中 -->
+					<view style="padding:10rpx">
+						<block>
+							<view style="margin: 0 10rpx;">
+								<block wx:for="{{item.buy}}" wx:for-key="" wx:for-item="buy">
+									<view class="flex solid-bottom justify-between">
+										<view class="text-xl text-bold">{{buy.name}}X{{buy.number}}</view>
+										<view wx:if="{{!buy.zhekou}}" class="text-xl">单价:￥{{buy.nowprice}}</view>
+										<view wx:else class="text-xl">单价:￥{{buy.nowprice}}<text
+												style="text-decoration:line-through;font-size: 25rpx;color:grey;">{{buy.price}}</text></view>
+									</view>
+
+								</block>
+							</view>
+						</block>
+					</view>
+					<!-- 下 -->
+					<view wx:if="{{item.beizu}}" class="flex solids-top justify-start">
+						<view style="padding:10rpx 20rpx 10rpx 20rpx">
+							{{item.beizu}}
+						</view>
+					</view>
+					<view class="flex solids-top justify-start">
+						<view style="padding:10rpx 20rpx 10rpx 20rpx">
+							<text
+								style="color:grey;font-size:25rpx">{{item.school}}-{{item.location}}-{{item.sushehao}}-{{item.name}}-{{item.tell}}</text>
+						</view>
+					</view>
+					<view class="flex solids-top justify-start">
+						<view style="padding:10rpx 20rpx 10rpx 20rpx">
+							<text style="color:grey;font-size:25rpx">订单号:{{item.outTradeNo}}</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</block>
+	</block>
+</view>

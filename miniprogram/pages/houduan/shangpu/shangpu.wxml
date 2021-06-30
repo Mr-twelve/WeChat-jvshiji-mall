@@ -1,0 +1,359 @@
+<block wx:if="{{tanchuangtabbar}}">
+	<block wx:if="{{tabbar}}">
+		<!-- 商铺 -->
+		<view class="cu-bar bg-white solid-bottom solids-bottom" bindtap="genguosetting">
+			<view class='action'>
+				<text class='cuIcon-titles text-green'></text>起送价￥{{goprice}}
+			</view>
+			<view class='action'>
+				<view wx:if="{{shopyesno}}" style="color:green;font-size:40rpx">营业</view>
+				<view wx:else style="color:red;font-size:40rpx">打样</view>
+			</view>
+		</view>
+		<view class="VerticalBox">
+			<scroll-view class="VerticalNav nav" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}"
+				style="height:calc(100vh - 100rpx)">
+				<view class="cu-item {{index==TabCur?'cur text-green':'caidanbackground'}}" wx:for="{{list}}" wx:key='myid'
+					bindtap='tabSelect' data-id="{{index}}" id="{{index}}" style="line-height:110%;height:110rpx">
+					<view style="display: flex;align-items: center;justify-content: center;width: 100%;height: 100%;">
+						{{item.name}}
+					</view>
+				</view>
+				<view wx:if="{{settingcaidan}}" class="cu-item" bindtap='addcaidan' style="border-top: 5rpx solid white">
+					<text class="cuIcon-add lg text-green">添加</text>
+				</view>
+				<view class="cu-item" bindtap='settingcaidan' style="border-top: 5rpx solid white">
+					<text class="cuIcon-settings lg text-blue">设置</text>
+				</view>
+			</scroll-view>
+			<scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 100rpx)"
+				scroll-into-view="main-{{MainCur}}" bindscroll="VerticalMain">
+				<view wx:for="{{list}}" wx:key="myid" id="main-{{index}}" wx:for-index="index">
+					<view class='cu-bar solid-bottom bg-white'>
+						<view class='action'>
+							<text class='cuIcon-title text-green'></text> {{item.name}} </view>
+					</view>
+					<!--  -->
+					<view class="cu-list menu-avatar">
+						<block wx:for="{{goods}}" wx:for-item="goods" wx:key="id" wx:for-index="goodsindex">
+							<view wx:if="{{goods.caidan==item.myid}}" class="cu-item" style="height: 185rpx;font-size: 40rpx;">
+								<image class="cu-avatar radius lg" src="{{goods.img}}"></image>
+								<view class="content" style="left: 200rpx;width:65%;line-height: 1.2em;">
+									<view class="text-black">
+										<text class="text-cut text-bold"
+											style="font-size: 35rpx;white-space: normal;line-height: 110%;font-size: 32rpx;">{{goods.name}}</text>
+									</view>
+									<view class="flex justify-between" style="padding-right: 10%">
+										<view class="text-gray text-sm flex">
+											<text class="text-cut">月售:{{goods.yuenumber}}</text>
+										</view>
+										<button wx:if="{{goods.nowbuy}}" class="cu-btn round bg-red"
+											style="width: 120rpx;height: 45rpx;">售罄</button>
+									</view>
+
+									<!-- <view class="text-sm flex" wx:if="{{goods.dayxiaoliang}}">
+										<text class="text-cut">库存:{{goods.daynumber}}</text>
+									</view> -->
+									<view class="text-gray text-sm flex" style="justify-content: space-between;padding-right: 8%;">
+										<text wx:if="{{goods.zhekou==false}}" class="text-price text-red"
+											style="font-size: 40rpx;">{{goods.price}}</text>
+										<text wx:if="{{goods.zhekou==true}}" class="text-price text-red"
+											style="font-size: 40rpx;">{{goods.zhekouprice}}<text class="text-price text-gray"
+												style="text-decoration:line-through;font-size: 30rpx;">{{goods.price}}</text></text>
+										<view class="action" style="width: 40%;">
+											<view class="text-grey">
+												<block wx:if="{{settingcaidan}}">
+													<button class="cu-btn round bg-green" style="width: 120rpx;height: 45rpx;" id="{{goodsindex}}"
+														bindtap="settinggoods">设置</button>
+												</block>
+												<block wx:if="{{!settingcaidan&&goods.guige}}">
+													<!-- <button class="cu-btn round bg-green" style="width: 120rpx;height: 45rpx;" id="{{goodsindex}}"
+														bindtap="xuanguige">选规格</button> -->
+												</block>
+											</view>
+										</view>
+									</view>
+								</view>
+							</view>
+						</block>
+						<!-- ------------------------------------ -->
+
+						<!-- ------------------------------ -->
+						<block>
+							<view wx:if="{{(index==list.length-1)&&(settingcaidan)}}">
+								<button bindtap="settingoodstanchuang" class="cu-btn bg-green margin-tb-sm lg">添加商品</button>
+							</view>
+							<view wx:if="{{index==list.length-1}}">
+								<view style="padding:100rpx 0;"></view>
+							</view>
+						</block>
+					</view>
+				</view>
+			</scroll-view>
+		</view>
+	</block>
+	<!-- 底部导航栏 -->
+	<view class="box" style="width:100%;color:green;position:fixed;bottom:0;z-index:9999">
+		<view class="cu-bar bg-white tabbar border shop" style="font-size:35rpx;margin-top:1%">
+			<view bindtap="tabbarshop" class="submit {{tabbar?'bg-green':'bg-white'}}">
+				<text class="cuIcon-shopfill"></text>商品管理
+			</view>
+			<view bindtap="tabbaruser" class="submit {{tabbar?'bg-white':'bg-green'}}">
+				<text class="cuIcon-my"></text>订单情况
+			</view>
+		</view>
+	</view>
+</block>
+<!-- 菜单弹窗 -->
+<block wx:if="{{caitantanchuang}}">
+	<view class="cu-bar bg-white justify-end">
+		<view class="content">{{caitanname}}设置</view>
+		<view class="action" bindtap="hidecaitantanchuang">
+			<text class="text-red">取消</text>
+		</view>
+	</view>
+	<form catchsubmit="caidansetting">
+		<view class="cu-form-group">
+			<view class="title">菜单名字</view>
+			<input type="text" name="caidanname" placeholder="请输入菜单名字"></input>
+		</view>
+		<view class="flex solid-bottom justify-between" style="padding: 0 30rpx;">
+			<button bindtap="dellcaidan" class="cu-btn bg-red margin-tb-sm lg">删除菜单</button>
+			<button formType="submit" class="cu-btn bg-green margin-tb-sm lg">保存</button>
+		</view>
+	</form>
+</block>
+
+<!-- 添加商品弹窗 -->
+<block wx:if="{{goodstanchuang}}">
+	<view class="cu-bar bg-white justify-end">
+		<view class="content">添加商品</view>
+		<view class="action" bindtap="hidegoodstanchuang">
+			<text class="text-red">取消</text>
+		</view>
+	</view>
+	<form catchsubmit="addgoods">
+		<view class="flex bg-white solid-bottom justify-center">
+			<view class="cu-avatar xl bg-brey" bindtap="chooseImage" style="background-image:url({{addgoodsimg}})">
+				<text wx:if="{{addgoodsimg.length==''}}" class="avatar-text">上传图片</text>
+			</view>
+		</view>
+		<view class="cu-form-group" style="paddint-top:20rpx">
+			<view class="title"><text space="emsp"> </text></view>
+		</view>
+		<view class="cu-form-group" style="paddint-top:20rpx">
+			<view class="title">商品名称</view>
+			<input type="text" name="goodsname" placeholder="请输入商品名称"></input>
+		</view>
+		<view class="cu-form-group">
+			<view class="title">商品价格</view>
+			<input name="goodsprice" type="digit" bindinput="numberprice" placeholder="请输入商品价格"></input>
+		</view>
+		<view class="cu-form-group">
+			<view class="title">所属菜单</view>
+			<picker bindchange="addPickerChange" value="{{caidan[addpickercaidanindex].myid}}" range-key="{{'name'}}"
+				range="{{caidan}}">
+				<view class="picker">
+					{{caidan[addpickercaidanindex].name}}
+				</view>
+			</picker>
+		</view>
+		<view class="flex solid-bottom justify-center flex-direction" style="padding: 0 30rpx;">
+			<button formType="submit" class="cu-btn bg-green margin-tb-sm lg">添加</button>
+		</view>
+	</form>
+</block>
+<!-- <view class="cu-modal {{goodstanchuang?'show':''}}">
+	<view class="cu-dialog">
+		<view class="cu-bar bg-white justify-end">
+			<view class="content">添加商品</view>
+			<view class="action" bindtap="hidegoodstanchuang">
+				<text class="cuIcon-close text-red"></text>
+			</view>
+		</view>
+		<form catchsubmit="addgoods">
+			<view class="flex bg-white solid-bottom justify-center">
+				<view class="cu-avatar xl bg-brey" bindtap="chooseImage" style="background-image:url({{addgoodsimg}})">
+					<text wx:if="{{addgoodsimg.length==''}}" class="avatar-text">上传图片</text>
+				</view>
+			</view>
+			<view class="cu-form-group" style="paddint-top:20rpx">
+				<view class="title"><text space="emsp"> </text></view>
+			</view>
+			<view class="cu-form-group" style="paddint-top:20rpx">
+				<view class="title">商品名称</view>
+				<input type="text" name="goodsname" placeholder="请输入商品名称"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title">商品价格</view>
+				<input name="goodsprice" type="number" placeholder="请输入商品价格"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title">所属菜单</view>
+				<picker bindchange="addPickerChange" value="{{caidan[addpickercaidanindex].myid}}" range-key="{{'name'}}" range="{{caidan}}">
+					<view class="picker">
+						{{caidan[addpickercaidanindex].name}}
+					</view>
+				</picker>
+			</view>
+			<view class="flex solid-bottom justify-center flex-direction" style="padding: 0 30rpx;">
+				<button formType="submit" class="cu-btn bg-green margin-tb-sm lg">添加</button>
+			</view>
+		</form>
+	</view>
+</view> -->
+<!-- 商品弹窗 -->
+<block wx:if="{{settinggoods}}">
+	<view class="cu-bar bg-white justify-end">
+		<view class="content">{{goodsname}}设置</view>
+		<view class="action" bindtap="hidesettinggoods">
+			<text class="cuIcon-close text-red"></text>
+		</view>
+	</view>
+	<form catchsubmit="settinggoodsok">
+		<view class="flex bg-white solid-bottom justify-center">
+			<image bindtap="chooseImage" class="cu-avatar xl" src="{{addgoodsimg}}">
+			</image>
+		</view>
+		<view class="cu-form-group">
+			<view class="title">商品名称</view>
+			<input type="text" name="goodsname" value="{{goodsname}}"></input>
+		</view>
+		<view class="cu-form-group">
+			<view class="title">商品价格</view>
+			<input name="goodsprice" type="digit" bindinput="numberprice" value="{{goodsprice}}"></input>
+		</view>
+		<view class="cu-form-group">
+			<view class="title">所属菜单</view>
+			<picker bindchange="PickerChange" value="{{caidan[pickercaidanindex].myid}}" range-key="{{'name'}}"
+				range="{{caidan}}">
+				<view class="picker">
+					{{caidan[pickercaidanindex].name}}
+				</view>
+			</picker>
+		</view>
+		<view class="cu-form-group margin-top">
+			<view class="title">商品暂停销售开关</view>
+			<switch checked="{{nowbuy}}" bindchange="nowbuy"></switch>
+		</view>
+		<view class="cu-form-group margin-top">
+			<view class="title">商品打折开关</view>
+			<switch checked="{{zhekou}}" bindchange="zhekou"></switch>
+		</view>
+		<block wx:if="{{zhekou}}">
+			<view class="cu-form-group">
+				<view class="title">商品打折价格</view>
+				<input name="zhekouprice" type="digit" bindinput="numberprice" value="{{zhekouprice}}"></input>
+			</view>
+		</block>
+
+		<view class="cu-form-group margin-top">
+			<view class="title">商品规格开关</view>
+			<switch checked="{{guige}}" bindchange="guige"></switch>
+		</view>
+		<block wx:if="{{guige}}">
+			<view class="cu-form-group">
+				<view class="title">口味(单选)</view>
+				<input name="guigekouweiname" placeholder="请输入标签名称" bindinput="guigekouweiname"></input>
+				<button class="cu-btn round lines-green" bindtap="addguigekouwei">添加</button>
+			</view>
+			<view class="cu-form-group" style="display: inline; padding-left:0;background-color: #eee;">
+				<block wx:for="{{guigekouwei}}">
+					<button id="{{index}}" bindtap="dellkouwei" class="cu-btn round lines-green"
+						style="margin-left:30rpx">{{item}}</button>
+				</block>
+			</view>
+		</block>
+		<block wx:if="{{guige}}">
+			<view class="cu-form-group margin-top">
+				<view class="title">商品规格开关2</view>
+				<switch checked="{{guige2}}" bindchange="guige2"></switch>
+			</view>
+			<block wx:if="{{guige2}}">
+				<view class="cu-form-group">
+					<view class="title">口味(单选)</view>
+					<input name="guigekouweiname" placeholder="请输入标签名称" bindinput="guigekouweiname2"></input>
+					<button class="cu-btn round lines-green" bindtap="addguigekouwei2">添加</button>
+				</view>
+				<view class="cu-form-group" style="display: inline; padding-left:0;background-color: #eee;">
+					<block wx:for="{{guigekouwei2}}">
+						<button id="{{index}}" bindtap="dellkouwei2" class="cu-btn round lines-green"
+							style="margin-left:30rpx">{{item}}</button>
+					</block>
+				</view>
+			</block>
+		</block>
+		<view class="flex solid-bottom justify-center flex-direction" style="padding: 0 30rpx;">
+			<button id="{{}}" bindtap="dellgoods" class="cu-btn bg-red margin-tb-sm lg">删除该菜品</button>
+			<button formType="submit" class="cu-btn bg-green margin-tb-sm lg">保存</button>
+		</view>
+	</form>
+</block>
+<!-- <view class="cu-modal {{settinggoods?'show':''}}">
+	<view class="cu-dialog">
+		<view class="cu-bar bg-white justify-end">
+			<view class="content">{{goodsname}}设置</view>
+			<view class="action" bindtap="hidesettinggoods">
+				<text class="cuIcon-close text-red"></text>
+			</view>
+		</view>
+		<form catchsubmit="settinggoodsok">
+			<view class="flex bg-white solid-bottom justify-center">
+				<image bindtap="chooseImage" class="cu-avatar xl" src="{{addgoodsimg}}">
+				</image>
+			</view>
+			<view class="cu-form-group">
+				<view class="title">商品名称</view>
+				<input type="text" name="goodsname" value="{{goodsname}}"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title">商品价格</view>
+				<input name="goodsprice" type="number" value="{{goodsprice}}"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title">所属菜单</view>
+				<picker bindchange="PickerChange" value="{{caidan[pickercaidanindex].myid}}" range-key="{{'name'}}" range="{{caidan}}">
+					<view class="picker">
+						{{caidan[pickercaidanindex].name}}
+					</view>
+				</picker>
+			</view>
+			<view class="flex solid-bottom justify-center flex-direction" style="padding: 0 30rpx;">
+				<button id="{{}}" bindtap="dellgoods" class="cu-btn bg-red margin-tb-sm lg">删除该菜品</button>
+				<button formType="submit" class="cu-btn bg-green margin-tb-sm lg">保存</button>
+			</view>
+		</form>
+	</view>
+</view> -->
+<!-- 更多设置弹窗 -->
+<view class="cu-modal {{genguosetting?'show':''}}">
+	<view class="cu-dialog">
+		<view class="cu-bar bg-white justify-end">
+			<view class="content">更多设置</view>
+			<view class="action" bindtap="hidegenguosetting">
+				<text class="cuIcon-close text-red"></text>
+			</view>
+		</view>
+		<form catchsubmit="gengduosetting">
+			<view class="cu-form-group">
+				<view class="title">起送价</view>
+				<input name="goprice" type="digit" bindinput="numberprice" value="{{goprice}}"></input>
+			</view>
+			<view class="yinye">
+				<view class="title">营业状态</view>
+				<view class="flex justify-center" style="width:80%;font-size:40rpx">
+					<view wx:if="{{shopyesnoing}}" bindtap="shopyesno" style="color:green">营业</view>
+					<view wx:else bindtap="shopyesno" style="color:red">打样</view>
+				</view>
+			</view>
+
+
+			<view class="flex solid-bottom justify-center" style="padding: 0 30rpx;">
+				<button formType="submit" class="cu-btn bg-green margin-tb-sm lg">保存</button>
+			</view>
+		</form>
+	</view>
+</view>
+
+<canvas canvas-id="canvas"
+	style="width:{{cWidth}}px;height:{{cHeight}}px;position: absolute;left:-1000px;top:-1000px;"></canvas>

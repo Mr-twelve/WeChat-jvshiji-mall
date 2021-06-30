@@ -1,0 +1,49 @@
+<view class="cu-form-group">
+	<view class="title">开始日期选择</view>
+	<picker mode="date" value="{{date1}}" start="2020-07-15" end="2025-09-01" bindchange="DateChange1">
+		<view class="picker">
+			{{date1}}
+		</view>
+	</picker>
+</view>
+
+
+<button bindtap="lookday" class="cu-btn block bg-green margin-tb-sm lg">查询</button>
+
+<view class="cu-card case">
+	<view class="cu-item shadow" style="margin:1rpx 1rpx 1rpx 1rpx;">
+		<view class="cu-list menu-avatar">
+			<view class="padding text-xl">
+				<view>平台共下单:<text class="text-green">{{dindan.length}}</text></view>
+			</view>
+		</view>
+	</view>
+</view>
+<view class="cu-card case">
+	<block>
+		<block wx:for="{{dindan}}">
+			<view class="cu-item shadow bg-white light solids" style="margin: 10rpx 20rpx;color:black">
+				<view class="cu-list menu-avatar">
+					<!-- 上 -->
+					<view class="flex radius text-xl text-bold solids-bottom justify-between"
+						style="padding: 20rpx 30rpx 20rpx 20rpx;">
+						<view>
+							<view style="display: flex;flex-direction:column;justify-content: center; font-size:35rpx">
+								下单时间:{{item.upday}}/{{item.uptime}}</view>
+							<view style="display: flex;flex-direction:column;justify-content: center; font-size:35rpx;color:{{item.day==item.upday?'blue':'red'}}">
+								{{item.yuyue}}</view>
+						</view>
+						<view style="display: flex;flex-direction:column;justify-content: center;" class="text-xxl text-red">
+							￥{{item.totalprice}}</view>
+					</view>
+					<!-- 下 -->
+					<view class="flex solids-top justify-start">
+						<view style="padding:10rpx 20rpx 10rpx 20rpx">
+							<text style="color:grey;font-size:25rpx">订单号:{{item.outTradeNo}}</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</block>
+	</block>
+</view>

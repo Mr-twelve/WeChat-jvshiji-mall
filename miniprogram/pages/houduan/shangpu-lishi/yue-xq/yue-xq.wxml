@@ -1,0 +1,93 @@
+<wxs module="gtday" src="gtday.wxs" />
+<view class="bg-white nav text-center fixed" style="font-size:45rpx">
+	<view class="cu-item">
+		{{yue}}:<text class="text-red">￥{{yuetotalprice}}</text>
+	</view>
+</view>
+<block wx:for="{{day}}">
+	<view id="{{index}}" bindtap="lookday" class="cu-bar bg-white solid-bottom">
+		<view class='action'>
+			<text class='cuIcon-titles text-green'></text>{{item.day}}
+		</view>
+		<view class="action">
+			<view class="text-red text-xl">￥{{gtday.toname(item.day,yyyymmdd)}}</view>
+		</view>
+	</view>
+	<!-- --------- -->
+	<view wx:if="{{item.look}}" class="cu-card case">
+		<view class="cu-item shadow" style="margin:1rpx 1rpx 1rpx 1rpx;">
+			<view class="cu-list menu-avatar">
+				<view class="padding text-xl">
+					<view>共出单:<text class="text-green">{{todaydindan.length}}</text></view>
+					<block wx:for="{{todaygoods}}" wx:key="_id">
+						<view>{{item._id}}:<text class="text-green">{{item.num}}</text>件</view>
+					</block>
+				</view>
+				<view class="solids-top padding text-xl">
+					<view class="flex justify-between">
+						<view>营业额:<text class="text-red">￥{{gtday.toname(item.day,yyyymmdd)}}</text></view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<!-- ---------- -->
+	<view class="cu-card case">
+		<block wx:if="{{item.look}}">
+			<block wx:for="{{todaydindan}}">
+				<view class="cu-item shadow bg-white light solids" style="margin: 10rpx 20rpx;color:black">
+					<view class="cu-list menu-avatar">
+						<!-- 上 -->
+						<view class="flex radius text-xl text-bold solids-bottom justify-between"
+							style="padding: 20rpx 30rpx 20rpx 20rpx;">
+							<view>
+								<view style="display: flex;flex-direction:column;justify-content: center; font-size:25rpx">
+									下单时间:{{item.upday}}/{{item.uptime}}/{{item.yuyue}}</view>
+								<view wx:if="{{item.goday}}"
+									style="display: flex;flex-direction:column;justify-content: center; font-size:25rpx">
+									出单时间:{{item.goday}}/{{item.gotime}}</view>
+								<view wx:else style="display: flex;flex-direction:column;justify-content: center; font-size:25rpx">
+									出单时间:未出单</view>
+
+							</view>
+							<view style="display: flex;flex-direction:column;justify-content: center;" class="text-xxl text-red">
+								￥{{item.totalprice}}</view>
+						</view>
+						<!-- 中 -->
+						<view style="padding:10rpx">
+							<block>
+								<view style="margin: 0 10rpx;">
+									<block wx:for="{{item.buy}}" wx:for-key="" wx:for-item="buy">
+										<view class="flex solid-bottom justify-between">
+											<view class="text-xl text-bold">{{buy.name}}X{{buy.number}}</view>
+											<view wx:if="{{!buy.zhekou}}" class="text-xl">单价:￥{{buy.nowprice}}</view>
+											<view wx:else class="text-xl">单价:￥{{buy.nowprice}}<text style="text-decoration:line-through;font-size: 25rpx;color:grey;">{{buy.price}}</text></view>
+										</view>
+
+									</block>
+								</view>
+							</block>
+						</view>
+						<!-- 下 -->
+						<view wx:if="{{item.beizu}}" class="flex solids-top justify-start">
+							<view style="padding:10rpx 20rpx 10rpx 20rpx">
+								{{item.beizu}}
+							</view>
+						</view>
+						<view class="flex solids-top justify-start">
+							<view style="padding:10rpx 20rpx 10rpx 20rpx">
+								<text
+									style="color:grey;font-size:25rpx">{{item.school}}-{{item.location}}-{{item.sushehao}}-{{item.name}}-{{item.tell}}</text>
+							</view>
+						</view>
+						<view class="flex solids-top justify-start">
+							<view style="padding:10rpx 20rpx 10rpx 20rpx">
+								<text style="color:grey;font-size:25rpx">订单号:{{item.outTradeNo}}</text>
+							</view>
+						</view>
+					</view>
+				</view>
+			</block>
+		</block>
+	</view>
+</block>

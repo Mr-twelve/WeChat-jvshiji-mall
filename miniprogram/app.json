@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/user/shangpu/shangpu",
+    "pages/user/userlocation/userlocation",
+    "pages/user/pay/pay",
+    "pages/houduan/shangpu/shangpu",
+    "pages/houduan/shangpu-dingdan/shangpu-dingdan",
+    "pages/houduan/shangpu-lishi/shangpu-lishi",
+    "pages/houduan/shangpu-lishi/yue-xq/yue-xq",
+    "pages/houduan/guanli/guanli",
+    "pages/houduan/guanli/people/people",
+    "pages/houduan/guanli/shop/shop",
+    "pages/houduan/guanli/yingye/yingye",
+    "pages/houduan/guanli/yingye/yue-xq/yue-xq",
+    "pages/text/text",
+    "pages/houduan/guanli/shop/addshop/addshop",
+    "pages/houduan/guanli/goods/goods",
+    "pages/index/worker/worker",
+    "pages/houduan/guanli/lookdindan/lookdindan",
+    "pages/houduan/guanli/lookpintaidindan/lookpintaidindan",
+    "pages/houduan/guanli/looksousuo/looksousuo",
+    "pages/util/home/home",
+    "pages/text/text2/text2",
+    "pages/houduan/guanli/usershop/usershop"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "聚食集",
+    "navigationBarTextStyle": "black"
+  },
+  "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom"
+  },
+  "sitemapLocation": "sitemap.json"
+}

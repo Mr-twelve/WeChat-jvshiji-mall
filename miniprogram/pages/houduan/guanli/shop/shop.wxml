@@ -1,0 +1,21 @@
+<view wx:for="{{shopTJ}}" class="cu-card article">
+	<view class="cu-item shadow {{item.have?'bg-olive':'bg-grey'}}" style="padding-bottom: 0rpx;margin:10rpx 30rpx;">
+		<view class="flex justify-between title {{item.have?'bg-olive':'bg-grey'}}" id="{{item.shopid}}" >
+			<view class="text-cut" id="{{item.shopid}}" bindtap="goshop">{{item.name}}({{item.shopid}})</view>
+			<view class="text-cut" id="账号：{{item.name}} 密码：{{item.shopid}}" bindtap="fuzhi">复制</view>
+		</view>
+		<view id="{{item.shopid}}" bindtap="goshopdindan" class="title solids-top" style="line-height: 65rpx;">
+			<view class="text-cut">订单查看</view>
+		</view>
+		<view wx:if="{{setting&&item.have}}" id="{{item._id}}" bindtap="outshop" class="title solids-top" style="line-height: 65rpx;">
+			<view class="text-cut">商铺下架</view>
+		</view>
+		<view id="{{item._id}}" bindtap="addshop" wx:if="{{!item.have}}" class="title solids-top" style="line-height: 65rpx;">
+			<view class="text-cut">商铺入驻</view>
+		</view>
+	</view>
+</view>
+
+<block>
+	<button bindtap="setting">设置下架</button>
+</block>

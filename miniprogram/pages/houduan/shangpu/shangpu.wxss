@@ -1,0 +1,10 @@
+@import "../../user/shangpu/shangpu.wxss";
+
+.yinye {
+  border-top: 1rpx solid #eee;
+  background-color: var(--white);
+  padding: 1rpx 30rpx;
+  display: flex;
+  align-items: center;
+  min-height: 100rpx;
+}

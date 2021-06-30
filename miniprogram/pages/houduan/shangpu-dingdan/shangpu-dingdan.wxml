@@ -1,0 +1,179 @@
+<view class="cu-bar bg-white solid-bottom" style="min-height: 80rpx;" bindtap="lishidingdan">
+	<view class="action">
+		<text class="cuIcon-title text-green"></text> 历史订单
+	</view>
+</view>
+<view class="cu-bar bg-white solid-bottom" bindtap="totalnow" style="min-height: 80rpx;">
+	<view class="action">
+		<text class="cuIcon-title text-green"></text> 待出单统计
+	</view>
+</view>
+<scroll-view scroll-x class="bg-white nav">
+	<view class="flex text-center">
+		<view class="cu-item flex-sub {{shopdindan?'text-green cur':''}}" bindtap="tabSelect1">
+			待出单{{nowgo+zwgo+wsgo}}
+		</view>
+		<view class="cu-item flex-sub {{shopdindan?'':'text-green cur'}}" bindtap="tabSelect2">
+			已出单{{yesgo}}
+		</view>
+	</view>
+</scroll-view>
+<view class="cu-form-group">
+	<view class="title">订单预约状态</view>
+	<picker bindchange="PickerChange" value="{{yuyueindex}}" range="{{yuyuepicker}}">
+		<view class="picker">
+			{{yuyuepicker[yuyueindex]}}
+		</view>
+	</picker>
+</view>
+<view class="cu-card case">
+	<block wx:for="{{todaydindan}}" wx:key='_id'>
+		<block wx:if="{{shopdindan&&item.go==0}}">
+			<block
+				wx:if="{{yuyuepickernow=='全部'||('预约明天'+yuyuepickernow==item.yuyue)||('预约今天'+yuyuepickernow==item.yuyue)||(yuyuepickernow==item.yuyue)}}">
+				<view class="cu-item shadow bg-white light solids" style="margin: 10rpx 20rpx;color:black">
+					<view class="cu-list menu-avatar">
+						<!-- 上 -->
+						<view class="flex radius text-xl text-bold solids-bottom justify-between"
+							style="padding: 20rpx 30rpx 20rpx 30rpx;">
+							<button class="cu-btn round bg-white button-hover" style="font-size:35rpx">共{{item.totalnumber}}件</button>
+							<view>
+								<button id="{{index}}" bindtap="dayin" class="cu-btn round bg-yellow button-hover">打单</button>
+								<button id="{{index}}" bindtap="godan" class="cu-btn round bg-green button-hover">出单</button>
+							</view>
+							<!-- <view class="text-grey" style="padding-right:20rpx">已完成</view> -->
+						</view>
+						<!-- 中 -->
+						<view style="padding:10rpx">
+							<view class="dingdanimg grid">
+								<block wx:for="{{item.buy}}" wx:key="id" wx:for-item="buy">
+									<view class="text-xl text-bold">{{buy.name}}X{{buy.number}}</view>
+								</block>
+							</view>
+						</view>
+						<!-- 下 -->
+						<view wx:if="{{item.beizu}}" class="flex solids-top justify-start">
+							<view style="padding:10rpx 20rpx 10rpx 20rpx">
+								{{item.beizu}}
+							</view>
+						</view>
+						<view class="flex solids-top justify-start text-bold">
+							<view style="padding:10rpx 20rpx 10rpx 20rpx">
+								<text class="text-yellow" wx:if="{{item.yuyue=='现在派送'}}">现在派送</text>
+								<text class="text-red" wx:if="{{item.yuyue=='预约明天中午'||item.yuyue=='预约今天中午'}}">预约中午</text>
+								<text class="text-blue" wx:if="{{item.yuyue=='预约明天晚上'||item.yuyue=='预约今天晚上'}}">预约晚上</text>
+								{{item.upday}}-{{item.uptime}}
+							</view>
+						</view>
+						<view class="flex solids-top justify-start text-bold">
+							<view style="padding:10rpx 20rpx 10rpx 20rpx">
+								{{item.school}}-{{item.location}}-{{item.sushehao}}-{{item.name}}-{{item.tell}}
+							</view>
+						</view>
+						<view class="flex solids-top justify-start text-bold">
+							<view style="padding:10rpx 20rpx 10rpx 20rpx">
+								订单号:{{item.outTradeNo}}
+							</view>
+						</view>
+					</view>
+				</view>
+			</block>
+		</block>
+		<block wx:if="{{!shopdindan&&item.go>0}}">
+			<block
+				wx:if="{{yuyuepickernow=='全部'||('预约明天'+yuyuepickernow==item.yuyue)||('预约今天'+yuyuepickernow==item.yuyue)||(yuyuepickernow==item.yuyue)}}">
+				<view class="cu-item shadow bg-white light solids" style="margin: 10rpx 20rpx;color:black">
+					<view class="cu-list menu-avatar">
+						<!-- 上 -->
+						<view class="flex radius text-xl text-bold solids-bottom justify-between"
+							style="padding: 20rpx 30rpx 20rpx 30rpx;">
+							<view style="display: flex;flex-direction:column;justify-content: center;">{{item.goday}}-{{item.gotime}}
+							</view>
+							<button id="{{index}}" bindtap="dayin" class="cu-btn round bg-yellow button-hover">打单</button>
+							<view>
+								<view style="display: flex;flex-direction:column;justify-content: center;" class="text-xxl text-red">
+									￥{{item.totalprice}}</view>
+							</view>
+						</view>
+						<!-- 中 -->
+						<view style="padding:10rpx">
+							<view class="dingdanimg grid">
+								<block wx:for="{{item.buy}}" wx:key="id" wx:for-item="buy">
+									<view class="text-xl text-bold">{{buy.name}}X{{buy.number}}</view>
+								</block>
+							</view>
+						</view>
+						<!-- 下 -->
+						<view wx:if="{{item.beizu}}" class="flex solids-top justify-start">
+							<view style="padding:10rpx 20rpx 10rpx 20rpx">
+								{{item.beizu}}
+							</view>
+						</view>
+						<view class="flex solids-top justify-start text-bold">
+							<view style="padding:10rpx 20rpx 10rpx 20rpx">
+								{{item.yuyue}}{{item.upday}}-{{item.uptime}}
+							</view>
+						</view>
+						<view class="flex solids-top justify-start text-bold">
+							<view style="padding:10rpx 20rpx 10rpx 20rpx">
+								{{item.school}}-{{item.location}}-{{item.sushehao}}-{{item.name}}-{{item.tell}}
+							</view>
+						</view>
+						<view class="flex solids-top justify-start text-bold">
+							<view style="padding:10rpx 20rpx 10rpx 20rpx">
+								订单号:{{item.outTradeNo}}
+							</view>
+						</view>
+					</view>
+				</view>
+			</block>
+		</block>
+	</block>
+
+	<view class="flex" style="padding:50rpx"></view> <!-- 垫底 -->
+</view>
+
+
+
+<!-- 底部导航栏 -->
+<view class="box" style="width:100%;color:green;position:fixed;bottom:0;z-index:9999">
+	<view class="cu-bar bg-white tabbar border shop" style="font-size:35rpx;margin-top:1%">
+		<view bindtap="tabbarshop" class="submit {{tabbar?'bg-green':'bg-white'}}">
+			<text class="cuIcon-shopfill"></text>商品管理
+		</view>
+		<view bindtap="tabbaruser" class="submit {{tabbar?'bg-white':'bg-green'}}">
+			<text class="cuIcon-my"></text>订单情况
+		</view>
+	</view>
+</view>
+
+
+<!-- 现在统计弹窗 -->
+<view class="cu-modal {{totalnow?'show':''}}">
+	<view class="tanchuang">
+		<view class="cu-bar bg-white justify-end">
+			<view class="content">待出单菜品统计</view>
+			<view class="action" bindtap="hidetotalnow">
+				<text class="cuIcon-close text-red"></text>
+			</view>
+		</view>
+		<view class="padding-top padding-bottom">
+			<block>
+				<view class="dingdanimg grid">
+					<view class="text-xl text-bold text-yellow">现在{{nowgo}}单</view>
+					<block wx:for="{{totalnowdindanXZ}}">
+						<view class="text-xl text-bold"><text space="ensp">"{{item._id}}" X {{item.num}}</text></view>
+					</block>
+					<view class="text-xl text-bold text-red">中午{{zwgo}}单</view>
+					<block wx:for="{{totalnowdindanZW}}">
+						<view class="text-xl text-bold"><text space="ensp">"{{item._id}}" X {{item.num}}</text></view>
+					</block>
+					<view class="text-xl text-bold text-blue">晚上{{wsgo}}单</view>
+					<block wx:for="{{totalnowdindanWS}}">
+						<view class="text-xl text-bold"><text space="ensp">"{{item._id}}" X {{item.num}}</text></view>
+					</block>
+				</view>
+			</block>
+		</view>
+	</view>
+</view>

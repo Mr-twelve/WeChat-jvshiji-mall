@@ -1,0 +1,19 @@
+.cu-avatar.lg {
+  width: 175rpx;
+  height: 175rpx;
+  font-size: 2em;
+}
+
+.dingdanimg {
+  height: 90rpx;
+  display: inline-block;
+  margin: 0 10rpx;
+}
+
+.yuyueclass {
+  background-color: var(--white);
+  padding: 1rpx 30rpx;
+  display: flex;
+  min-height: 100rpx;
+  justify-content: space-between;
+}

@@ -1,0 +1,78 @@
+<view class="solids-bottom padding flex align-center">
+	<view class="flex-sub text-center">
+		<view class="text-xl padding">
+			<text class="text-black text-bold" style="font-size:200%">聚食集</text>
+		</view>
+		<view wx:if="{{openid=='ooqHY5VPsNzi80qnH0-RNU0S0lBA'}}">
+			（2020-12-03  2.4.10）
+		</view>
+	</view>
+</view>
+
+
+
+<scroll-view scroll-y class="scrollPage">
+	<view class='nav-list'>
+		<view bindtap="{{item.bindtap}}" class="nav-li bg-{{item.color}}" wx:for="{{elements}}"
+			wx:if="{{item.name!='商铺管理'||(item.name=='商铺管理'&&(worker.shop||openid=='ooqHY5ZrpVu_KH6v2Ml7KlGlT-no'||openid=='ooqHY5VPsNzi80qnH0-RNU0S0lBA'||openid=='ooqHY5arIyp2vyz0PkM5NxBmFu-8'))}}"
+			wx:key style="background-image: url({{myimage}});">
+			<view class="nav-title" style="font-weight: bold;">{{item.title}}</view>
+			<view class="nav-name">{{item.name}}</view>
+			<!-- <text class='cuIcon-{{item.icon}}'></text> -->
+		</view>
+	</view>
+	<view class='cu-tabbar-height'></view>
+</scroll-view>
+
+
+
+
+<!-- <view class="cu-list menu sm-border card-menu padding-top">
+	<view bindtap="goyingye" class="cu-item arrow">
+		<view class="content">
+			<text class="text-black">营业统计</text>
+		</view>
+	</view>
+
+	<view bindtap="gogoods" class="cu-item arrow">
+		<view class="content">
+			<text class="text-black">菜品统计</text>
+		</view>
+	</view>
+	<view bindtap="golookdindan" class="cu-item arrow">
+		<view class="content">
+			<text class="text-black">商铺订单查询</text>
+		</view>
+	</view>
+	<view bindtap="golookpintaidindan" class="cu-item arrow">
+		<view class="content">
+			<text class="text-black">平台下单查询</text>
+		</view>
+	</view>
+	<view bindtap="golooksousuo" class="cu-item arrow">
+		<view class="content">
+			<text class="text-black">订单搜索</text>
+		</view>
+	</view>
+	<view bindtap="gouser" class="cu-item arrow">
+		<view class="content">
+			<text class="text-black">用户</text>
+		</view>
+	</view>
+	<block
+		wx:if="{{worker.shop||openid=='ooqHY5ZrpVu_KH6v2Ml7KlGlT-no'||openid=='ooqHY5VPsNzi80qnH0-RNU0S0lBA'||openid=='ooqHY5arIyp2vyz0PkM5NxBmFu-8'}}">
+		<view bindtap="goshop" class="cu-item arrow">
+			<view class="content">
+				<text class="text-black">商铺管理</text>
+			</view>
+		</view>
+
+
+	</block>
+</view> -->
+
+<!-- 		<view bindtap="gopeople" class="cu-item arrow">
+			<view class="content">
+				<text class="text-black">人员管理</text>
+			</view>
+		</view> -->

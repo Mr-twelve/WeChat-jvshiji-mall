@@ -1,0 +1,22 @@
+.page {
+  background-color: white;
+  display: block;
+  min-height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+button {
+  margin: 0;
+  padding: 0;
+  background-color: inherit;
+  position: static;
+}
+button:after {
+  content: none;
+}
+
+button::after {
+  border: none;
+}

@@ -1,0 +1,32 @@
+<wxs module="filters" src="../../../../util/toFixed.wxs"></wxs>
+
+<block wx:for="{{TJ}}">
+	<view id="{{index}}" bindtap="lookday" class="cu-bar bg-white solid-bottom">
+		<view class='action'>
+			<text class='cuIcon-titles text-green'></text>{{item.day}}
+		</view>
+		<view class="action">
+			<view class="text-red text-xl">￥{{filters.toFix(item.price)}}</view>
+		</view>
+	</view>
+	<!-- --------- -->
+	<view wx:if="{{item.look}}" class="cu-card case">
+		<view class="cu-item shadow" style="margin:5rpx 30rpx 30rpx 30rpx;">
+			<view class="cu-list menu-avatar">
+				<view class="padding text-xl">
+						<block wx:for="{{item.TJ}}" wx:key="id" wx:for-item="shangpu">
+							<view>{{(shopTJ[shangpu._id])?(shopTJ[shangpu._id]):shangpu._id}}:<text class="text-green">{{shangpu.num}}</text>单，收入<text class="text-red">${{filters.toFix(shangpu.price)}}</text></view>
+						</block>
+				</view>
+				<view class="solids-top padding text-xl">
+        <view class="flex justify-between">
+						<view>平台共出单:<text class="text-green">{{item.num}}</text></view>
+					</view>
+					<view class="flex justify-between">
+						<view>平台总营业额:<text class="text-red">￥{{filters.toFix(item.price)}}</text></view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</block>

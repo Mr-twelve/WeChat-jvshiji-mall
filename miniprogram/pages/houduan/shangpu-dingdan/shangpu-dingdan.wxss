@@ -1,0 +1,24 @@
+/* pages/component/nav/nav.wxss */
+.cu-avatar.lg {
+  width: 175rpx;
+  height: 175rpx;
+  font-size: 2em;
+}
+
+.dingdanimg {
+  display: inline-block;
+  margin: 0 10rpx;
+}
+
+.tanchuang {
+  position: relative;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 680rpx;
+  max-width: 100%;
+  background-color: #f8f8f8;
+  border-radius: 10rpx;
+  overflow: hidden;
+
+}

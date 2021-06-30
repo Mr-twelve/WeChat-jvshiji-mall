@@ -1,0 +1,26 @@
+	<block wx:for="{{dayjs_yue}}" wx:key="item.day">
+		<view id="{{item.day}}" bindtap="lookyuexq" class="cu-bar bg-white solid-bottom">
+			<view class="action">
+				<text class="cuIcon-title text-green "></text> {{item.day}}
+			</view>
+		</view>
+		<view wx:if="{{item.look}}" class="cu-card case">
+			<view class="cu-item shadow" style="margin:5rpx 30rpx 30rpx 30rpx;">
+				<view class="cu-list menu-avatar">
+					<view class="padding text-xl">
+						<block wx:for="{{yuetotal}}" wx:key='_id'>
+							<view>{{item._id}}:<text class="text-green">{{item.num}}</text>件</view>
+						</block>
+					</view>
+					<view class="solids-top padding text-xl">
+						<view class="flex justify-between">
+							<view>营业额:<text class="text-red">￥14065</text></view>
+							<view id="{{item.day}}" bindtap="lookyuexq" class="text-blue">查看详情<text class="cuIcon-right lg text-gray"></text></view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</block>
+
+	<!-- ------------- -->

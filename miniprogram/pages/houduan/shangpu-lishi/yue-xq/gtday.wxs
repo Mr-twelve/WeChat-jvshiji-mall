@@ -1,0 +1,17 @@
+var gtday = {
+  toname: function (value, arr) {
+    for (var i = 0; i <= arr.length; i++) {
+      if(i<arr.length){
+        if (value == arr[i]._id) {
+          return parseFloat(arr[i].num.toFixed(2))
+          break;
+        } 
+      }else {
+          return '0'
+        }
+    }
+  }
+}
+module.exports = {
+  toname: gtday.toname
+}

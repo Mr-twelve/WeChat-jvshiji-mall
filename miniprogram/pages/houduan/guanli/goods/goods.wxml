@@ -1,0 +1,40 @@
+<view class="cu-form-group margin-top">
+	<view class="title">商铺选择</view>
+	<picker bindchange="PickerChange" value="{{index}}" range="{{picker}}" range-key="{{'name'}}">
+		<view class="picker">
+			{{picker[index].name}}
+		</view>
+	</picker>
+</view>
+
+<view class="cu-form-group">
+	<view class="title">开始日期选择</view>
+	<picker mode="date" value="{{date1}}" start="2020-07-15" end="2025-09-01" bindchange="DateChange1">
+		<view class="picker">
+			{{date1}}
+		</view>
+	</picker>
+</view>
+<view class="cu-form-group">
+	<view class="title">结束日期选择</view>
+	<picker mode="date" value="{{date2}}" start="2020-07-15" end="2025-09-01" bindchange="DateChange2">
+		<view class="picker">
+			{{date2}}
+		</view>
+	</picker>
+</view>
+
+<button bindtap="daygoods" class="cu-btn block bg-green margin-tb-sm lg">查询</button>
+
+<view class="bg-white text-xl">
+	<view class="action">
+		<text class="cuIcon-title text-blue"></text>{{picker[index].name}}({{picker[index].shopid}})
+		<text class="text-red text-bold">￥{{shopprice}}</text>
+	</view>
+	<block wx:for="{{goods}}">
+		<view class="padding-left margin-xs radius">{{item._id}}
+			<text style="padding:0 10rpx">X</text>
+			<text class="text-blue text-bold">{{item.num}}</text>
+		</view>
+	</block>
+</view>

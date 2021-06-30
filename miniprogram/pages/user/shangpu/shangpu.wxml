@@ -1,0 +1,381 @@
+<block wx:if="{{tabbar}}">
+	<!-- 商铺 -->
+	<view wx:if="{{!shopyesno}}" class="bg-red flex justify-center">
+		<view class="action">
+			<text wx:if="{{!weihu}}">【{{shopname}}】目前已打样</text>
+			<text wx:if="{{weihu}}">聚食集平台23:50-00:00定期维护</text>
+		</view>
+	</view>
+	<view class="VerticalBox">
+		<scroll-view class="VerticalNav nav" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}"
+			style="height:calc(100vh - 100rpx)">
+			<view class="cu-item {{index==TabCur?'cur text-green':'caidanbackground'}}" wx:for="{{list}}" wx:key='name'
+				bindtap='tabSelect' data-id="{{index}}" style="line-height:110%;height:110rpx">
+			<view style="display: flex;align-items: center;justify-content: center;width: 100%;height: 100%;">{{item.name}}</view>	
+			</view>
+		</scroll-view>
+		<scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 100rpx)"
+			scroll-into-view="main-{{MainCur}}" bindscroll="VerticalMain">
+			<view wx:for="{{list}}" wx:key="name" id="main-{{index}}" wx:for-index="index">
+				<view class='cu-bar solid-bottom bg-white'>
+					<view class='action'>
+						<text class='cuIcon-title text-green'></text> {{item.name}} </view>
+				</view>
+				<!--  -->
+				<view class="cu-list menu-avatar">
+					<block wx:for="{{goods}}" wx:for-item="goods" wx:key="id" wx:for-index="goodsindex">
+						<view wx:if="{{goods.caidan==item.myid}}" class="cu-item" style="height: 185rpx;font-size: 40rpx;">
+							<image class="cu-avatar radius lg" src="{{goods.img}}"></image>
+							<view class="content" style="left: 200rpx;width:65%;line-height: 1.2em;">
+								<view class="text-black">
+									<text class="text-cut text-bold" style="font-size: 35rpx;white-space: normal;line-height: 110%;font-size: 32rpx;">{{goods.name}}</text>
+								</view>
+								<view class="text-gray text-sm flex">
+									<text class="text-cut">月售:{{goods.yuenumber}}</text>
+								</view>
+								<!-- <view class="text-sm flex" wx:if="{{goods.dayxiaoliang}}">
+									<text wx:if="{{goods.daynumber>=0}}" class="text-cut">库存:{{goods.daynumber}}</text>
+									<text wx:else class="text-cut">库存:0</text>
+								</view> -->
+								<view class="text-gray text-sm flex" style="justify-content: space-between;padding-right: 8%;">
+									<text wx:if="{{goods.zhekou==false}}" class="text-price text-red"
+										style="font-size: 40rpx;">{{goods.price}}</text>
+									<text wx:if="{{goods.zhekou==true}}" class="text-price text-red"
+										style="font-size: 40rpx;">{{goods.zhekouprice}}<text class="text-price text-gray"
+											style="text-decoration:line-through;font-size: 30rpx;">{{goods.price}}</text></text>
+									<view class="action" style="width: 40%;">
+										<view class="text-grey">
+											<block wx:if="{{shopyesno}}">
+												<block wx:if="{{!goods.nowbuy}}">
+													<!-- 规格开启 -->
+													<block wx:if="{{goods.guige}}">
+														<button wx:if="{{newuser}}" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo"
+															class="cu-btn round bg-green"
+															style="width: 120rpx;height: 45rpx;padding-left: 5rpx;padding-right: 5rpx;"
+															id="{{goodsindex}}">选规格</button>
+														<button wx:if="{{!newuser}}" class="cu-btn round bg-green"
+															style="width: 120rpx;height: 45rpx;padding-left: 5rpx;padding-right: 5rpx;"
+															id="{{goodsindex}}" bindtap="xuanguige">选规格 <view wx:if="{{goods.number!=0}}"
+																class="cu-tag badge">{{goods.number}}</view></button>
+													</block>
+													<block wx:if="{{!goods.guige}}">
+														<!-- 购物车中无此商品 -->
+														<block wx:if="{{goods.number==0}}">
+															<button wx:if="{{newuser}}" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo"
+																class="cu-btn round bg-green" style="width: 120rpx;height: 45rpx;"
+																id="{{goodsindex}}">添加</button>
+															<button wx:if="{{!newuser}}" class="cu-btn round bg-green"
+																style="width: 120rpx;height: 45rpx;" id="{{goodsindex}}"
+																bindtap="oneaddgoods">添加</button>
+														</block>
+														<block wx:else>
+															<view class="text-grey">
+																<button name="{{goodsindex}}" id="{{goodsindex}}" bindtap="reducenumber"
+																	class="cu-btn icon"><text>-</text></button>
+																<button class="cu-btn icon bg-white"><text>{{goods.number}}</text></button>
+																<button id="{{goodsindex}}" bindtap="addgoods"
+																	class="cu-btn icon"><text>+</text></button>
+															</view>
+														</block>
+													</block>
+												</block>
+												<block wx:else>
+													<button disabled="true" class="cu-btn round bg-grey"
+																style="width: 120rpx;height: 45rpx;" >售罄</button>
+												</block>
+											</block>
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
+					</block>
+					<!-- ------------------------------ -->
+					<block>
+						<view wx:if="{{index==list.length-1}}">
+							<view style="padding:100rpx 0;"></view>
+						</view>
+					</block>
+					<!-- <view class="cu-item" style="height: 175rpx;font-size: 40rpx;">
+					<view class="cu-avatar radius lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big81007.jpg);"></view>
+					<view class="content" style="left: 200rpx;width:65%;line-height: 1.2em;">
+						<view class="text-black">
+							<text class="text-cut text-bold" style="font-size: 40rpx;">麻辣拌</text>
+						</view>
+						<view class="text-gray text-sm flex">
+							<text class="text-cut">月售:510</text>
+						</view>
+						<view class="text-gray text-sm flex" style="justify-content: space-between;padding-right: 8%;">
+							<text class="text-price text-red" style="font-size: 40rpx;">9</text>
+							<view class="action" style="width: 40%;">
+								<view class="text-grey">
+									<button class="cu-btn round bg-green" style="width: 120rpx;height: 45rpx;">添加</button>
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+
+				<view class="cu-item" style="height: 175rpx;font-size: 40rpx;">
+					<view class="cu-avatar radius lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big81007.jpg);"></view>
+					<view class="content" style="left: 200rpx;width:65%;line-height: 1.2em;">
+						<view class="text-black">
+							<text class="text-cut text-bold" style="font-size: 40rpx;">麻辣拌</text>
+						</view>
+						<view class="text-gray text-sm flex">
+							<text class="text-cut">月售:510</text>
+						</view>
+						<view class="text-gray text-sm flex" style="justify-content: space-between;padding-right: 8%;">
+							<text class="text-price text-red" style="font-size: 40rpx;">9</text>
+							<view class="action" style="width: 40%;">
+								<view class="text-grey">
+									<button class="cu-btn icon"><text>-</text></button>
+									<button class="cu-btn icon bg-white"><text>1</text></button>
+									<button class="cu-btn icon"><text>+</text></button>
+								</view>
+							</view>
+						</view>
+					</view>
+				</view> -->
+					<!-- ------------------------------ -->
+				</view>
+			</view>
+		</scroll-view>
+	</view>
+</block>
+<!-- 个人界面 -->
+<block wx:else>
+	<!-- 顶部联系方式 -->
+	<view class="bg-gradual-green flex justify-center">
+		<view class="action">
+			<text class="cuIcon-title text-red"></text>
+			<text>平台联系方式：18403441128</text>
+		</view>
+	</view>
+	<!-- 用户信息 -->
+	<view class="bg-gradual-green">
+		<view class="flex solid-bottom padding align-center">
+			<block wx:if="{{!newuser}}">
+				<view class="cu-avatar xl round margin-left" style="background-image:url({{usertximg}});"></view>
+				<view class="padding-sm margin-xs radius text-bold text-xl">{{username}}</view>
+			</block>
+			<block wx:if="{{newuser}}">
+				<button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="cu-avatar lg round margin-left bg-grey ">
+					<text class="cuIcon-my" style="font-size:140rpx"></text>
+				</button>
+				<button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" style="background-color:transparent;"
+					class="padding-sm margin-xs radius text-bold text-xl btn-confirm">点击进行登陆</button>
+			</block>
+		</view>
+	</view>
+	<view class="cu-bar bg-white solid-bottom">
+		<view class='action' style="display: inline;">
+			<view class="flex"><text class='cuIcon-location text-green'></text> 地址管理</view>
+			<view wx:if="{{!havelocation}}" style="padding-left:30rpx" bindtap="userlocation"><text
+					style="color:blue">点击设置地址</text></view>
+			<view wx:else style="padding-left:30rpx;font-size: 26rpx;" bindtap="userlocation"><text
+					class="text-bold">{{userlocation.school}}-{{userlocation.location}}-{{userlocation.sushehao}}-{{userlocation.name}}-{{userlocation.tell}}</text>
+			</view>
+
+		</view>
+	</view>
+	<!-- 订单情况 -->
+	<view class="cu-bar bg-white solid-bottom">
+		<view class='action flex justify-between'>
+			<view><text class='cuIcon-form text-green'></text> 全部订单</view>
+		</view>
+		<view style="padding-right:30rpx">
+			<text class="cuIcon-unfold lg"></text>
+		</view>
+	</view>
+	<!-- 订单内容 -->
+	<view class="cu-card case">
+		<block wx:for="{{mydingdan}}" wx:key="_id">
+			<view class="cu-item shadow" style="margin: 10rpx;">
+				<view class="cu-list menu-avatar">
+					<!-- 上 -->
+					<view class="flex radius text-bold solids-bottommy justify-between" style="padding: 20rpx 0 20rpx 30rpx;">
+						<view>{{item.shopname}}<text style="font-size:20rpx">(下单时间{{item.upday}}-{{item.uptime}})</text></view>
+						<view wx:if='{{item.go==0}}' class="text-yellow" style="padding-right:20rpx">待出单</view>
+						<view wx:if='{{item.go>0}}' class="text-green" style="padding-right:20rpx">已出单</view>
+						<!-- <view class="text-grey" style="padding-right:20rpx">已出单</view> -->
+					</view>
+					<!-- 中 -->
+					<view style="padding: 10rpx 0;">
+						<scroll-view scroll-x class="bg-white nav" scroll-with-animation style="margin: 0 20rpx">
+							<block wx:for="{{item.buy}}" wx:key="id" wx:for-item="dingdanbuy">
+								<view class="dingdanimg cu-list grid">
+									<image class="cu-avatar xl" src="{{dingdanbuy.img}}" style="line-height;display:flex;">
+										<view wx:if="{{dingdanbuy.number>1}}" class="cu-tag badge" style="top: 0rpx;right: 0rpx;">
+											{{dingdanbuy.number}}
+										</view>
+									</image>
+									<view class="flex" style="width:128rpx"><text class="text-cut">{{dingdanbuy.name}}</text></view>
+								</view>
+							</block>
+						</scroll-view>
+					</view>
+					<!-- 下 -->
+					<view class="flex solids-topmy justify-start">
+						<view style="padding:10rpx 20rpx 10rpx 20rpx">
+							<text style="color:grey;font-size:25rpx">备注:<block wx:if="{{item.beizu}}">{{item.beizu}}</block>
+								<block wx:else>无</block>
+							</text>
+						</view>
+					</view>
+					<view class="flex solids-topmy justify-start">
+						<view style="padding:0rpx 20rpx">
+							<text
+								style="color:grey;font-size:25rpx">{{item.school}}-{{item.location}}-{{item.sushehao}}-{{item.name}}-{{item.tell}}</text>
+						</view>
+					</view>
+					<view class="flex solids-topmy justify-start">
+						<view style="padding:0rpx 20rpx">
+							<text wx:if="{{item.school=='师范(目前东门自取)'}}"
+								style="color:grey;font-size:25rpx">师范:周一到周五中午东门自取,周五下午到周日送到宿舍！</text>
+						</view>
+					</view>
+					<view class="flex solids-topmy justify-start">
+						<view style="padding:0rpx 20rpx">
+							<text style="color:grey;font-size:25rpx">订单号：{{item.outTradeNo}}</text>
+						</view>
+					</view>
+					<view class="flex solids-topmy justify-between">
+						<view style="padding:10rpx 20rpx 10rpx 20rpx">
+							<text style="font-size:35rpx">{{item.yuyue}}</text>
+						</view>
+						<view style="padding:10rpx 20rpx 10rpx 0">
+							<text style="color:grey;font-size:25rpx">共{{item.totalnumber}}件</text>
+							<text style="color:red;font-size:35rpx">￥{{item.totalprice}}</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</block>
+		<view wx:if="{{mydindantotal>20}}" class="flex solid-bottom text-sm padding justify-center">
+			<text class="text-grey">---只显示最新20条订单---</text>
+		</view>
+		<view class="flex" style="padding:50rpx"></view> <!-- 垫底 -->
+	</view>
+</block>
+<!-- 底部导航 -->
+<view class="box" style="width:100%;color:green;position:fixed;bottom:0;z-index:9999">
+	<block wx:if="{{tabbar}}">
+		<view class="flex  p-xs  mb-sm align-center" style="padding:0 10rpx;">
+			<view bindtap="showModal" class="flex-twice bg-black padding-sm" style="border-radius: 40rpx 0 0 40rpx;">
+				<view class="flex justify-between">
+					<view>
+						<view style="padding-left:30rpx;">
+							<text class="cuIcon-goodsfill" style="font-size:45rpx"></text>
+							<text style="font-size:25rpx">X{{totalnumber}}</text>
+							<text class="text-red text-bold" style="font-size:40rpx">￥{{totalprice}}</text>
+						</view>
+					</view>
+					<view wx:if="{{totalprice<goprice}}" style="padding-top:15rpx;font-size:25rpx;">差￥{{goprice-totalprice}}起送
+					</view>
+				</view>
+			</view>
+			<block>
+				<view bindtap="{{totalprice<goprice?'':'pay'}}"
+					class="flex-sub padding-sm {{totalprice<goprice?'bg-grey':'bg-green'}}"
+					style="border-radius:0 40rpx 40rpx 0;text-align: center;">
+					<text style="font-size:40rpx;">去结算</text>
+				</view>
+			</block>
+		</view>
+	</block>
+
+	<view class="cu-bar bg-white tabbar border shop" style="font-size:35rpx;margin-top:1%">
+		<view bindtap="tabbarshop" class="submit {{tabbar?'bg-green':'bg-white'}}">
+			<text class="cuIcon-shopfill"></text>商铺
+		</view>
+		<view bindtap="tabbaruser" class="submit {{tabbar?'bg-white':'bg-green'}}">
+			<text class="cuIcon-my"></text>我的
+		</view>
+	</view>
+</view>
+
+<!-- 购物车底部弹出 -->
+<view class="cu-modal bottom-modal {{modalName?'show':''}}">
+	<view style="position:absolute; z-index:100; top:0; right:0; bottom: 0; left:0; background:rgba(0,0,0,0.3);"
+		bindtap="hideModal"></view>
+	<view class="cu-dialog" style="z-index:200;">
+
+		<view style="padding-bottom: 215rpx;padding-top: 20rpx;">
+			<!-- Modal 内容。 -->
+			<scroll-view class="VerticalMain" scroll-y scroll-with-animation scroll-into-view="main-{{MainCur}}"
+				bindscroll="VerticalMain">
+				<view class="cu-list menu-avatar">
+					<block wx:for="{{buy}}" wx:for-item="buy" wx:key="id">
+						<view class="cu-item" style="font-size: 40rpx;">
+							<image class="cu-avatar radius lg" src="{{buy.img}}" style="width: 130rpx;height: 130rpx;left: 35rpx;">
+							</image>
+							<view class="content" style="left: 200rpx;width:65%;line-height: 1.2em;">
+								<view class="text-black">
+									<text class="text-cut text-bold" style="font-size: 40rpx;">{{buy.name}}</text>
+								</view>
+								<view class="text-gray text-sm flex" style="justify-content: space-between;padding-right: 8%;">
+									<text wx:if="{{buy.zhekou==false}}" class="text-price text-red"
+										style="font-size: 40rpx;">{{buy.price}}</text>
+									<text wx:if="{{buy.zhekou==true}}" class="text-price text-red"
+										style="font-size: 40rpx;">{{buy.zhekouprice}}<text class="text-price text-gray"
+											style="text-decoration:line-through;font-size: 30rpx;">{{buy.price}}</text></text>
+									<view class="action" style="width: 40%;">
+										<view class="text-grey">
+											<view class="text-grey">
+												<block wx:if="{{!buy.guige}}">
+													<button id="{{buy.index}}" bindtap="reducenumber" class="cu-btn icon"><text>-</text></button>
+													<button class="cu-btn icon bg-white"><text
+															style="font-weight: bold;font-size: 35rpx;">{{buy.number}}</text></button>
+													<button id="{{buy.index}}" bindtap="addgoods" class="cu-btn icon"><text>+</text></button>
+												</block>
+												<block wx:if="{{buy.guige}}">
+													<button id="{{index}}" bindtap="guigereducenumber" class="cu-btn icon"><text>-</text></button>
+													<button class="cu-btn icon bg-white"><text
+															style="font-weight: bold;font-size: 35rpx;">{{buy.number}}</text></button>
+													<button id="{{index}}" bindtap="guigeaddgoods" class="cu-btn icon"><text>+</text></button>
+												</block>
+											</view>
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
+					</block>
+				</view>
+			</scroll-view>
+			<!--  -->
+		</view>
+	</view>
+</view>
+
+<!-- 选规格弹窗 -->
+<view class="cu-modal {{guige?'show':''}}" bindtap="hidexuanguige">
+	<view class="cu-dialog bg-white" style="vertical-align: 30%;" catchtap>
+
+		<view class="cu-bar bg-white justify-end">
+			<view class="content">{{goodsname}}</view>
+		</view>
+		<view>
+			口味<text wx:if="{{goodsguige2}}">一</text>
+		</view>
+		<view class="grid col-5 padding-sm">
+			<block wx:for="{{goodsguigekouwei}}">
+				<button class="cu-btn {{guigeindex==index?'bg-green':'line-green'}} button-hover" id="{{index}}"
+					bindtap="guigekouwei" style="width:27%;margin:10rpx 3.15%">{{item}}</button>
+			</block>
+		</view>
+		<block wx:if="{{goodsguige2}}">
+			<view>
+				口味二
+			</view>
+			<view class="grid col-5 padding-sm">
+				<block wx:for="{{goodsguigekouwei2}}">
+					<button class="cu-btn {{guigeindex2==index?'bg-green':'line-green'}} button-hover" id="{{index}}"
+						bindtap="guigekouwei2" style="width:27%;margin:10rpx 3.15%">{{item}}</button>
+				</block>
+			</view>
+		</block>
+		<button class="cu-btn bg-green margin-tb-sm lg" style="width:75%;" bindtap="guigeoneaddgoods">加入购物车</button>
+	</view>
+</view>

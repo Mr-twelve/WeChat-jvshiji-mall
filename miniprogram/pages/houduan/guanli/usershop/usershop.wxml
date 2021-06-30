@@ -1,0 +1,8 @@
+<view wx:for="{{shopTJ}}" class="cu-card article">
+	<view class="cu-item shadow {{item.have?'bg-olive':'bg-grey'}}" style="padding-bottom: 0rpx;margin:10rpx 30rpx;">
+		<view class="flex justify-between title {{item.have?'bg-olive':'bg-grey'}}" id="{{item.shopid}}" >
+			<view class="text-cut" id="{{item._id}}" bindtap="goshop">{{item.name}}({{item.shopid}})</view>
+			<view class="text-cut" id="账号：{{item.name}} 密码：{{item.shopid}}" bindtap="fuzhi">复制</view>
+		</view>
+	</view>
+</view>

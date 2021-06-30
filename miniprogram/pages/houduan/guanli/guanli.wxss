@@ -1,0 +1,95 @@
+page {
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.nav-li {
+  padding: 40rpx;
+  border-radius: 12rpx;
+  width: 45%;
+  margin: 0 2.5% 40rpx;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  z-index: 1;
+}
+
+.bg-cyan {
+  background-color: var(--cyan);
+  color: var(--white);
+}
+view, scroll-view, swiper, button, input, textarea, label, navigator, image {
+  box-sizing: border-box;
+}
+
+navigator {
+  height: auto;
+  width: auto;
+  display: block;
+}
+
+
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0px 40rpx 0px;
+  justify-content: space-between;
+}
+
+.nav-name {
+  font-size: 28rpx;
+  text-transform: Capitalize;
+  margin-top: 20rpx;
+  position: relative;
+}
+
+.nav-li text {
+  position: absolute;
+  right: 30rpx;
+  top: 30rpx;
+  font-size: 52rpx;
+  width: 60rpx;
+  height: 60rpx;
+  text-align: center;
+  line-height: 60rpx;
+}
+.nav-title {
+  font-size: 32rpx;
+  font-weight: 300;
+}
+[class*="cuIcon-"] {
+  font-family: "cuIcon";
+  font-size: inherit;
+  font-style: normal;
+}
+
+.cu-tabbar-height {
+  min-height: 100rpx;
+  height: calc(100rpx + env(safe-area-inset-bottom) / 2);
+}
+
+.nav-name::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 40rpx;
+  height: 6rpx;
+  background: #fff;
+  bottom: 0;
+  right: 0;
+  opacity: 0.5;
+}
+.nav-name::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100rpx;
+  height: 1px;
+  background: #fff;
+  bottom: 0;
+  right: 40rpx;
+  opacity: 0.3;
+}
